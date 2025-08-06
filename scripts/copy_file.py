@@ -4,5 +4,9 @@ def copy_file(project_root: str, binary: str, user: str, host: str, destination:
     subprocess.run(f"scp {binary} {user}@{host}:{destination} > NUL", cwd = project_root, check = True, shell = True)
 
 
-def allow_execution(user: str, host: str, binary: str):
-    subprocess.run(f"ssh {user}@{host} chmod +x {binary}", shell = True)
+def create_directory(user: str, host: str, destination: str):
+    subprocess.run(f"ssh {user}@{host} mkdir -p {destination}", shell = True)
+
+
+def allow_execution(user: str, host: str, destination: str, binary: str):
+    subprocess.run(f"ssh {user}@{host} chmod +x {destination}/{binary}", shell = True)

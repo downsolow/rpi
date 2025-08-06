@@ -5,4 +5,4 @@ binary_name = "app"
 binary_path = os.path.join(project_root, "target", "aarch64-unknown-linux-gnu", "release", binary_name)
 rpi_user = "erd"
 rpi_host = "raspberrypi1.local"
-destination = "~"
+destination = "/home/erd/training/hello_world_diode"
