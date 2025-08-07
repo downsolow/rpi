@@ -1,7 +1,8 @@
 import subprocess
 import os
+from config import *
 
-rpi_user = "erd@raspberrypi1.local"
+rpi_user = f"{rpi_user}@{rpi_host}"
 check_ssh_already_copied_command = f"ssh -o BatchMode=yes {rpi_user} true"
 ssh_check_result = subprocess.run(check_ssh_already_copied_command)
 
