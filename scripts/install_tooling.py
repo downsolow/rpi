@@ -4,7 +4,6 @@ import zipfile
 import os
 import sys
 import tarfile
-import urllib.request
 import platform
 from pathlib import Path
 import subprocess
