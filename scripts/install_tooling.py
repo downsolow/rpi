@@ -62,6 +62,8 @@ def verify_installation(bin_dir):
 
     try:
         compiler_path = os.path.join(bin_dir, "aarch64-none-linux-gnu-gcc")
+        if platform.system() == 'Windows':
+            compiler_path += ".exe"
         if os.path.exists(compiler_path):
             result = subprocess.run([compiler_path, "--version"], capture_output=True, text=True)
             print("\nVerification successful. Toolchain information:")
@@ -74,9 +76,12 @@ def verify_installation(bin_dir):
 def extract_toolchain(download_path, build_dir):
     (_, ext) = os.path.splitext(download_path)
     if ext == ".zip":
+        build_dir = os.path.join(build_dir, "arm-gnu-toolchain-aarch64-none-linux-gnu")
+        os.mkdir(build_dir)
         extract_zip(download_path, build_dir)
     else:
         extract_tarxz(download_path, build_dir)
+        os.rename(download_path.replace(".tar.xz", ""), get_toolchain_path(build_dir))
 
 def download_toolchain(url, download_path, toolchain_path):
     if not os.path.exists(toolchain_path):
@@ -87,17 +92,14 @@ def download_toolchain(url, download_path, toolchain_path):
         verify_installation(bin_dir)
         sys.exit(0)
 
-def get_toolchain_path(build_dir, filename):
-    if filename.endswith('.tar.xz'):
-        return os.path.join(build_dir, filename.replace(".tar.xz", ""))
-    else:
-        return os.path.join(build_dir, filename.replace(".zip", ""))
+def get_toolchain_path(build_dir):
+    return os.path.join(build_dir, "arm-gnu-toolchain-aarch64-none-linux-gnu")
 
 def main():
     url = get_toolchain_url()
     filename = url.split("/")[-1]
     build_dir = create_build_dir()
-    toolchain_path = get_toolchain_path(build_dir, filename)
+    toolchain_path = get_toolchain_path(build_dir)
     download_path = os.path.join(build_dir, filename)
     
     download_toolchain(url, download_path, toolchain_path)
