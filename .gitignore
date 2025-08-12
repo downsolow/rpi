@@ -1,3 +1,5 @@
-/target
-/scripts/__pycache__
+$NULL
 /build
+/Cargo.lock
+/scripts/__pycache__
+/target

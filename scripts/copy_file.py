@@ -1,6 +1,12 @@
 import subprocess
 import platform
 
+
+def copy_directory_recursive(directory: str, user: str, host: str, destination):
+    trash = "$NULL" if platform.system() == "Windows" else "/dev/null"
+    subprocess.run(f"scp -r {directory} {user}@{host}:{destination} > {trash}", check = True, shell = True)
+
+
 def copy_file(project_root: str, binary: str, user: str, host: str, destination: str):
     trash: str
     if platform.system() == "Windows":
